@@ -1,0 +1,95 @@
+{
+  "owners": [
+    {
+      "name": "Peter",
+      "riders": [
+        "Tadej Pogacar",
+        "Florian Lipowitz",
+        "Benjamin Thomas",
+        "Mathieu van der Poel",
+        "Bert van Lerberghe",
+        "Pascal Eenkhoorn",
+        "Jonas Rutsch",
+        "Hugo Page"
+      ]
+    },
+    {
+      "name": "Mette Skovbo",
+      "riders": [
+        "Tadej Pogacar",
+        "Mathieu van der Poel",
+        "Biniam Girmay",
+        "Krists Neilands",
+        "Mathieu Burgaudeau",
+        "Mathis Le Berre",
+        "Georg Zimmermann",
+        "Nils Politt"
+      ]
+    },
+    {
+      "name": "Nikolai",
+      "riders": [
+        "Tadej Pogacar",
+        "Remco Evenepoel",
+        "Florian Lipowitz",
+        "Pascal Eenkhoorn",
+        "Jonas Rickaert",
+        "Frank van den Broek",
+        "Jonas Rutsch",
+        "Jarrad Drizners"
+      ]
+    },
+    {
+      "name": "John",
+      "riders": [
+        "Jonas Vingegaard",
+        "Joao Almeida",
+        "Matteo Jorgenson",
+        "Pascal Eenkhoorn",
+        "Jonas Abrahamsen",
+        "Kevin Vauquelin",
+        "Valentin Madouas",
+        "Jasper Stuyven"
+      ]
+    },
+    {
+      "name": "Elisabeth",
+      "riders": [
+        "Magnus Cort",
+        "Jonas Abrahamsen",
+        "Pascal Eenkhoorn",
+        "Elmar Reinders",
+        "Biniam Girmay",
+        "Nils Politt",
+        "Mattias Skjelmose",
+        "Tadej Pogacar"
+      ]
+    },
+    {
+      "name": "Mark",
+      "riders": [
+        "Jonas Vingegaard",
+        "Joao Almeida",
+        "Simon Yates",
+        "Clément Champoussin",
+        "Mathis Le Berre",
+        "Luke Plapp",
+        "Robert Stannard",
+        "Kevin Vauquelin"
+      ]
+    },
+    {
+      "name": "Mette Milo",
+      "riders": [
+        "Simon Yates",
+        "Carlos Rodriguez",
+        "Enric Mas Nicolau",
+        "Fred Wright",
+        "Ben Healy",
+        "Geraint Thomas",
+        "Benjamin Thomas",
+        "Valentin Madouas"
+      ]
+    }
+  ]
+}

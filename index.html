@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tour de France Breakaway Tracker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1 id="headerTitle">🚴‍♂️ Tour de France Breakaway Tracker</h1>
+            <div class="live-indicator">
+                <span class="dot"></span>
+                <span>Live Data</span>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <!-- Visual Race Display Section -->
+            <section class="visual-race-section">
+                <div class="section-header">
+                    <h2>Race Visualization</h2>
+                  <div class="last-update">
+                        Last updated: <span id="lastUpdate">Never</span>
+                    </div>
+                    <div class="race-direction">
+                        <span>Finish Line →</span>
+                    </div>
+                </div>
+                
+                <div id="visualRace" class="visual-race">
+                    <div class="race-track">
+                        <!--<div class="finish-line">FINISH</div> -->
+                        <div id="raceGroups" class="race-groups">
+                            <div class="loading-visual">Waiting for race data...</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Race Data Section -->
+            <section class="race-section">
+                <div class="section-header">
+                    <h2>Current Race Positions</h2>
+                    <div class="last-update">
+                        Last updated: <span id="lastUpdate">Never</span>
+                    </div>
+                </div>
+                
+                <div class="breakaway-alert" id="breakawayAlert" style="display: none;">
+                    <h3>🚨 Your Riders in Breakaway!</h3>
+                    <div id="breakawayRiders"></div>
+                </div>
+
+                <div id="raceData" class="race-data">
+                    <div class="loading">Fetching race data...</div>
+                </div>
+            </section>
+
+            <!-- All Teams Section -->
+            <section class="all-teams-section">
+                <div class="section-header">
+                    <h2>All Teams</h2>
+                    <button id="toggleTeamsBtn" class="toggle-btn">Show Teams</button>
+                </div>
+                
+                <div id="allTeamsContent" class="all-teams-content hidden">
+                    <div id="allTeamsList" class="all-teams-list">
+                        <div class="loading">Loading teams...</div>
+                    </div>
+                </div>
+            </section>
+
+          
+            <!-- Owner Registration Section -->
+           <  <section class="owner-section">
+                <div class="section-header">
+                    <h2>Team Owner Registration</h2>
+                    <button id="editBtn" class="edit-btn">Edit Team</button>
+                </div>
+                
+                <div id="ownerForm" class="owner-form hidden">
+                    <div class="form-group">
+                        <label for="ownerName">Owner Name:</label>
+                        <input type="text" id="ownerName" placeholder="Enter your name">
+                    </div>
+                    
+                    <div class="riders-grid">
+                        <h3>Select Your 8 Riders:</h3>
+                        <div class="riders-inputs">
+                            <input type="text" class="rider-input" placeholder="Rider 1" data-index="0">
+                            <input type="text" class="rider-input" placeholder="Rider 2" data-index="1">
+                            <input type="text" class="rider-input" placeholder="Rider 3" data-index="2">
+                            <input type="text" class="rider-input" placeholder="Rider 4" data-index="3">
+                            <input type="text" class="rider-input" placeholder="Rider 5" data-index="4">
+                            <input type="text" class="rider-input" placeholder="Rider 6" data-index="5">
+                            <input type="text" class="rider-input" placeholder="Rider 7" data-index="6">
+                            <input type="text" class="rider-input" placeholder="Rider 8" data-index="7">
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button id="saveBtn" class="save-btn">Save Team</button>
+                        <button id="cancelBtn" class="cancel-btn">Cancel</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+                <div id="ownerDisplay" class="owner-display">
+                    <div class="owner-info">
+                        <h3 id="displayOwnerName">Register your team to get started</h3>
+                        <div id="ridersList" class="riders-list"></div>
+                    </div>
+                </div>
+    <script src="script.js"></script>
+</body>
+</html>
