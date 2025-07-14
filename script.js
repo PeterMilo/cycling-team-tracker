@@ -534,7 +534,7 @@ formatRiderName(rider) {
     getOwnerNamesForRider(riderName) {
         if (!this.allTeams) return [];
         
-        // console.log(`Looking for owners of rider: ${riderName}`); // Debug log
+        console.log(`Looking for owners of rider: ${riderName}`); // Debug log
         
         const ownerNames = [];
         this.allTeams.owners.forEach(owner => {
@@ -547,7 +547,7 @@ formatRiderName(rider) {
                 return raceRiderLastName === teamRiderLastName;
             });
             if (hasRider) {
-                // console.log(`Found match! Owner: ${owner.name}`); // Debug log
+                console.log(`Found match! Owner: ${owner.name}`); // Debug log
                 ownerNames.push(owner.name);
             }
         });
