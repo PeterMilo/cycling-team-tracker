@@ -251,7 +251,7 @@ formatRiderName(rider) {
             }
             
             // Construct URL for latest.json in current stage folder
-            const url = `/api/cycling/stage-${this.currentStage}/latest.json`;
+            const url = `https://cycling-scrapes.s3.us-east-1.amazonaws.com/stage-${this.currentStage}/latest.json`;
             console.log(`Fetching race data from: ${url}`);
             
             const response = await fetch(url);
