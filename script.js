@@ -51,6 +51,8 @@ class TourTracker {
         this.updateInterval = null;
         this.currentStage = null;
         this.allTeams = null;
+        this.riderOwnerIndex = null;
+
         
         this.init();
     }
@@ -491,11 +493,28 @@ formatRiderName(rider) {
                 throw new Error('Failed to load teams data');
             }
             this.allTeams = await response.json();
+            this.buildRiderOwnerIndex();
             console.log('All teams loaded:', this.allTeams);
         } catch (error) {
             console.error('Error loading teams:', error);
         }
     }
+
+    buildRiderOwnerIndex() {
+    // Map last-name → array of owner names
+    this.riderOwnerIndex = new Map();
+
+    this.allTeams.owners.forEach(owner => {
+        owner.riders.forEach(rider => {
+            // "Mathieu Burgaudeau"  →  "BURGAUDEAU"
+            const last = rider.split(' ').pop().toUpperCase();
+            const list = this.riderOwnerIndex.get(last) || [];
+            list.push(owner.name);
+            this.riderOwnerIndex.set(last, list);
+        });
+    });
+    }
+
 
     toggleAllTeams() {
         const content = document.getElementById('allTeamsContent');
@@ -551,28 +570,13 @@ formatRiderName(rider) {
     }
 
     getOwnerNamesForRider(riderName) {
-        if (!this.allTeams) return [];
-        
-        console.log(`Looking for owners of rider: ${riderName}`); // Debug log
-        
-        const ownerNames = [];
-        this.allTeams.owners.forEach(owner => {
-            const hasRider = owner.riders.some(rider => {
-                // For race data format "BURGAUDEAU Mathieu", extract "BURGAUDEAU"
-                // For teams.json format "Mathieu Burgaudeau", extract "Burgaudeau"
-                const raceRiderLastName = riderName.split(' ')[0].toUpperCase(); // First word in race data
-                const teamRiderLastName = rider.split(' ').pop().toUpperCase(); // Last word in teams data
-                // console.log(`Comparing race rider "${raceRiderLastName}" with team rider "${teamRiderLastName}"`); // Debug log
-                return raceRiderLastName === teamRiderLastName;
-            });
-            if (hasRider) {
-                // console.log(`Found match! Owner: ${owner.name}`); // Debug log
-                ownerNames.push(owner.name);
-            }
-        });
-        
-        return ownerNames;
+    if (!this.riderOwnerIndex) return [];
+
+    // Race feed format: "BURGAUDEAU Mathieu" → take first token
+    const last = riderName.split(' ')[0].toUpperCase();
+    return this.riderOwnerIndex.get(last) || [];
     }
+
 }
 
 // Initialize the app when the page loads
