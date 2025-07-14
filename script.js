@@ -222,6 +222,25 @@ class TourTracker {
         }
     }
 
+    /**
+     * Convert a "+m:ss" or "+h:mm:ss" gap to pure seconds.
+     * Anything that can’t be parsed returns Infinity so it is
+     * pushed far to the right.
+     */
+    parseTimeGap(timeGap) {
+        if (!timeGap || timeGap[0] !== '+') return Infinity;
+
+        const nums = timeGap.slice(1).split(':').map(Number);   // drop ‘+’
+        let seconds = 0;
+
+        // 1-part → mm
+        // 2-part → mm:ss
+        // 3-part → hh:mm:ss
+        nums.forEach(n => { seconds = seconds * 60 + n; });
+
+        return seconds;
+    }
+
 formatRiderName(rider) {
     const words = rider.toLowerCase()
         .split(' ')
