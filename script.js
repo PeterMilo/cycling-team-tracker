@@ -562,11 +562,11 @@ formatRiderName(rider) {
                 // For teams.json format "Mathieu Burgaudeau", extract "Burgaudeau"
                 const raceRiderLastName = riderName.split(' ')[0].toUpperCase(); // First word in race data
                 const teamRiderLastName = rider.split(' ').pop().toUpperCase(); // Last word in teams data
-                console.log(`Comparing race rider "${raceRiderLastName}" with team rider "${teamRiderLastName}"`); // Debug log
+                // console.log(`Comparing race rider "${raceRiderLastName}" with team rider "${teamRiderLastName}"`); // Debug log
                 return raceRiderLastName === teamRiderLastName;
             });
             if (hasRider) {
-                console.log(`Found match! Owner: ${owner.name}`); // Debug log
+                // console.log(`Found match! Owner: ${owner.name}`); // Debug log
                 ownerNames.push(owner.name);
             }
         });
