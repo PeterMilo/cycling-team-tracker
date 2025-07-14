@@ -308,43 +308,44 @@ formatRiderName(rider) {
     }
 
     displayVisualRace() {
-        const raceGroupsContainer = document.getElementById('raceGroups');
-        
-        if (!this.raceData) {
-            raceGroupsContainer.innerHTML = '<div class="loading-visual">Waiting for race data...</div>';
-            return;
-        }
+    const raceGroupsContainer = document.getElementById('raceGroups');
 
-        let html = '';
-        
-        // Sort groups from right to left: Position 1 → Peloton → Behind
-        const sortedGroups = [...this.raceData].sort((a, b) => {
-            if (a.position === '-') return -1; // Behind goes first (rightmost)
-            if (b.position === '-') return 1;
-            if (a.position === 'P') return -1; // Peloton goes second
-            if (b.position === 'P') return 1;
-            return parseInt(b.position) - parseInt(a.position); // Higher positions first
-        });
-
-        sortedGroups.forEach(group => {
-            const positionLabel = this.getPositionLabel(group.position);
-            const groupClass = this.getGroupClass(group.position);
-            
-            html += `
-                <div class="race-group ${groupClass}">
-                    <div class="group-info">
-                        <div class="group-position">${positionLabel}</div>
-                        <div class="group-time">${group.timeGap}</div>
-                    </div>
-                    <div class="group-riders-list">
-                        ${this.renderRidersList(group.riders)}
-                    </div>
-                </div>
-            `;
-        });
-
-        raceGroupsContainer.innerHTML = html;
+    if (!this.raceData) {
+        raceGroupsContainer.innerHTML =
+            '<div class="loading-visual">Waiting for race data...</div>';
+        return;
     }
+
+    /* 🔽  NEW ORDER  🔽
+       – convert the “+m:ss” string to seconds
+       – bigger gap first ➜ will be rendered *right-most*
+         because the flex row is `row-reverse` in CSS   */
+    const sortedGroups = [...this.raceData].sort((a, b) =>
+        this.parseTimeGap(b.timeGap) - this.parseTimeGap(a.timeGap)
+    );
+
+    // build the DOM exactly as before
+    let html = '';
+    sortedGroups.forEach(group => {
+        const positionLabel = this.getPositionLabel(group.position);
+        const groupClass    = this.getGroupClass(group.position);
+
+        html += `
+            <div class="race-group ${groupClass}">
+                <div class="group-info">
+                    <div class="group-position">${positionLabel}</div>
+                    <div class="group-time">${group.timeGap}</div>
+                </div>
+                <div class="group-riders-list">
+                    ${this.renderRidersList(group.riders)}
+                </div>
+            </div>
+        `;
+    });
+
+    raceGroupsContainer.innerHTML = html;
+}
+
 
     getGroupClass(position) {
         switch(position) {
@@ -533,7 +534,7 @@ formatRiderName(rider) {
     getOwnerNamesForRider(riderName) {
         if (!this.allTeams) return [];
         
-        console.log(`Looking for owners of rider: ${riderName}`); // Debug log
+        // console.log(`Looking for owners of rider: ${riderName}`); // Debug log
         
         const ownerNames = [];
         this.allTeams.owners.forEach(owner => {
@@ -546,7 +547,7 @@ formatRiderName(rider) {
                 return raceRiderLastName === teamRiderLastName;
             });
             if (hasRider) {
-                console.log(`Found match! Owner: ${owner.name}`); // Debug log
+                // console.log(`Found match! Owner: ${owner.name}`); // Debug log
                 ownerNames.push(owner.name);
             }
         });
