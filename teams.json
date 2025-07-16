@@ -5,8 +5,8 @@
       "riders": [
         "Tadej Pogacar",
         "Florian Lipowitz",
-        "Benjamin Thomas",
-        "Mathieu van der Poel",
+        "Connor Swift",
+        "Jonas Vingegaard",
         "Bert van Lerberghe",
         "Pascal Eenkhoorn",
         "Jonas Rutsch",
@@ -17,8 +17,8 @@
       "name": "Mette Skovbo",
       "riders": [
         "Tadej Pogacar",
-        "Mathieu van der Poel",
-        "Biniam Girmay",
+        "Matteo Jorgenson",
+        "Remco Evenepoel",
         "Krists Neilands",
         "Mathieu Burgaudeau",
         "Mathis Le Berre",
@@ -43,25 +43,25 @@
       "name": "John",
       "riders": [
         "Jonas Vingegaard",
-        "Joao Almeida",
+        "Ben Healy",
         "Matteo Jorgenson",
         "Pascal Eenkhoorn",
         "Jonas Abrahamsen",
         "Kevin Vauquelin",
-        "Valentin Madouas",
+        "Anders Halland Johannessen",
         "Jasper Stuyven"
       ]
     },
     {
       "name": "Elisabeth",
       "riders": [
-        "Magnus Cort",
+        "Primoz Roglic",
         "Jonas Abrahamsen",
         "Pascal Eenkhoorn",
         "Elmar Reinders",
         "Biniam Girmay",
         "Nils Politt",
-        "Mattias Skjelmose",
+        "Ben Healy",
         "Tadej Pogacar"
       ]
     },
@@ -69,11 +69,11 @@
       "name": "Mark",
       "riders": [
         "Jonas Vingegaard",
-        "Joao Almeida",
+        "Oscar Onley",
         "Simon Yates",
-        "Clément Champoussin",
+        "Joseph Blackmore",
         "Mathis Le Berre",
-        "Luke Plapp",
+        "Lenny Martinez",
         "Robert Stannard",
         "Kevin Vauquelin"
       ]
@@ -84,7 +84,7 @@
         "Simon Yates",
         "Carlos Rodriguez",
         "Enric Mas Nicolau",
-        "Fred Wright",
+        "Oscar Onley",
         "Ben Healy",
         "Geraint Thomas",
         "Benjamin Thomas",
