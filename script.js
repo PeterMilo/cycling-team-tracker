@@ -290,7 +290,7 @@ class TourTracker {
             this.raceData = await response.json();
             const timeStamp = url.match(/\/(\d{4}-\d{2}-\d{2})T(\d{2})-(\d{2})-(\d{2})-(\d{3})Z\.json$/);
 
-            if (stampMatch) {
+            if (timeStamp) {
             const [ , date, hh, mm, ss, ms ] = stampMatch;
             const iso = `${date}T${hh}:${mm}:${ss}.${ms}Z`;  // perfect ISO-8601
             this.lastUpdate = new Date(iso);
