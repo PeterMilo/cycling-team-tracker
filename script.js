@@ -184,7 +184,7 @@ class TourTracker {
             const riderName = input.value.trim();
             if (riderName) {
                 // Normalize rider name format to match API data
-                this.riders.push(riderName.toUpperCase());
+                this.riders.push(this.normalizeName(riderName));
             }
         });
 
@@ -243,16 +243,22 @@ class TourTracker {
         return seconds;
     }
 
-formatRiderName(rider) {
-    const words = rider.toLowerCase()
-        .split(' ')
-        .map(word => word.charAt(0).toUpperCase() + word.slice(1));
+    formatRiderName(rider) {
+    const ascii = rider
+        .normalize('NFD')                // é → e + ́
+        .replace(/[\u0300-\u036f]/g, ''); // drop the accent marks
 
-    const firstName = words.pop();        // Last word is the first name
-    words.unshift(firstName);             // Move it to the front
+    const words = ascii
+        .toLowerCase()
+        .split(' ')
+        .map(w => w.charAt(0).toUpperCase() + w.slice(1));
+
+    const firstName = words.pop();
+    words.unshift(firstName);
 
     return words.join(' ');
-}
+    }
+
 
 
     async startDataFetching() {
@@ -282,7 +288,15 @@ formatRiderName(rider) {
             }
 
             this.raceData = await response.json();
-            this.lastUpdate = new Date();
+            const timeStamp = url.match(/\/(\d{4}-\d{2}-\d{2})T(\d{2})-(\d{2})-(\d{2})-(\d{3})Z\.json$/);
+
+            if (stampMatch) {
+            const [ , date, hh, mm, ss, ms ] = stampMatch;
+            const iso = `${date}T${hh}:${mm}:${ss}.${ms}Z`;  // perfect ISO-8601
+            this.lastUpdate = new Date(iso);
+            } else {
+            this.lastUpdate = new Date();                    // fallback
+            }
             
             console.log(`Race data updated for stage ${this.currentStage}:`, this.raceData);
             
@@ -375,6 +389,26 @@ formatRiderName(rider) {
             default: return 'breakaway-group';
         }
     }
+
+
+    makeKey(name, source) {
+    // source: 'team'  = "Firstname Lastname"
+    //         'race'  = "LASTNAME Firstname"
+    const parts = this.normalizeName(name).split(' ');
+ 
+    let last, firstInitial;
+ 
+    if (source === 'team') {
+      last         = parts[parts.length - 1]; // last token
+      firstInitial = parts[0][0];             // first-name initial
+    } else {                                  // 'race'
+      last         = parts[0];                // first token
+      firstInitial = parts.length > 1 ? parts[1][0] : '';
+    }
+ 
+    return `${last}_${firstInitial}`;
+    }
+
 
     renderRidersList(riders) {
         if (riders.length === 0) {
@@ -501,19 +535,19 @@ formatRiderName(rider) {
     }
 
     buildRiderOwnerIndex() {
-    // Map last-name → array of owner names
-    this.riderOwnerIndex = new Map();
+  // Map KEY (LASTNAME_INITIAL) → array of owner names
+  this.riderOwnerIndex = new Map();
 
-    this.allTeams.owners.forEach(owner => {
-        owner.riders.forEach(rider => {
-            // "Mathieu Burgaudeau"  →  "BURGAUDEAU"
-            const last = rider.split(' ').pop().toUpperCase();
-            const list = this.riderOwnerIndex.get(last) || [];
-            list.push(owner.name);
-            this.riderOwnerIndex.set(last, list);
-        });
+  this.allTeams.owners.forEach(owner => {
+    owner.riders.forEach(rider => {
+      const key  = this.makeKey(rider, 'team');     // e.g. "THOMAS_B"
+      const list = this.riderOwnerIndex.get(key) || [];
+      list.push(owner.name);
+      this.riderOwnerIndex.set(key, list);
     });
-    }
+  });
+}
+
 
 
     toggleAllTeams() {
@@ -572,10 +606,20 @@ formatRiderName(rider) {
     getOwnerNamesForRider(riderName) {
     if (!this.riderOwnerIndex) return [];
 
-    // Race feed format: "BURGAUDEAU Mathieu" → take first token
-    const last = riderName.split(' ')[0].toUpperCase();
-    return this.riderOwnerIndex.get(last) || [];
+    // Use the unified key: LASTNAME_INITIAL
+    const key = this.makeKey(riderName, 'race');
+    return this.riderOwnerIndex.get(key) || [];
+}
+
+
+
+    normalizeName(name) {
+    return name
+        .normalize('NFD')                  // á → a + ́  (decompose)
+        .replace(/[\u0300-\u036f]/g, '')   // remove diacritic code-points
+        .toUpperCase();                    // fold to one casing
     }
+
 
 }
 
